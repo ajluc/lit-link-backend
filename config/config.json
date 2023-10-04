@@ -1,0 +1,17 @@
+{
+  "development": {
+    "database": "lit-link_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "lit-link_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "lit-link_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
