@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Club, MemberList } = require('../models')
 
 // temporary for testing - remove when incorporating auth
 const createUser = async (req, res) => {
@@ -20,7 +20,26 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const getUserById = async (req, res) => {
+    try {
+        const { user_id } = req.params
+        const user = await User.findByPk(user_id, {
+            include: [
+                {
+                    model: Club,
+                    as: 'clubs',
+                    through: MemberList
+                }
+            ]
+        })
+        res.send(user)
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     createUser, 
-    getAllUsers
+    getAllUsers,
+    getUserById
 }
