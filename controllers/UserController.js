@@ -28,7 +28,8 @@ const getUserById = async (req, res) => {
                 {
                     model: Club,
                     as: 'clubs',
-                    through: MemberList
+                    through: MemberList,
+                    attributes: ['id', 'clubName']
                 }
             ]
         })
