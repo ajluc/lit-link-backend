@@ -19,6 +19,25 @@ const getAllClubs = async (req, res) => {
     }
 }
 
+const getClubById = async (req, res) => {
+    try {
+        const { club_id } = req.params
+        const club = await Club.findByPk(club_id, {
+            include: [
+                {
+                    model: Book,
+                    as: 'books',
+                    through: ReadingList,
+                    attributes: ['id','data']
+                }
+            ]
+        })
+        res.send(club)
+    } catch (error) {
+        throw error
+    }
+}
+
 const addMemberToClub = async (req, res) => {
     try {
         const club = await Club.findByPk(req.params.club_id)
@@ -64,6 +83,7 @@ const addBookToList = async (req, res) => {
 module.exports = {
     createClub,
     getAllClubs,
+    getClubById,
     addMemberToClub,
     addBookToList
 }
