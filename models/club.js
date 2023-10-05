@@ -11,16 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Club.belongsToMany(models.User, {
+        as: 'members',
+        through: models.MemberList,
+        foreignKey: 'clubId'
+      })
     }
   }
   Club.init({
-    clubName: DataTypes.STRING,
-    bookList: DataTypes.ARRAY,
-    meetings: DataTypes.ARRAY,
-    proposedMeetings: DataTypes.ARRAY
+    clubName: { 
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Club',
+    tableName: 'clubs'
   });
   return Club;
 };
