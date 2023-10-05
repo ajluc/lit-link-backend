@@ -4,5 +4,6 @@ const controller = require('../controllers')
 Router.post('/', controller.ClubController.createClub)
 Router.get('/', controller.ClubController.getAllClubs)
 Router.post('/:club_id/addUsers', controller.ClubController.addMemberToClub)
+Router.post('/:club_id/addBooks', controller.ClubController.addBookToList)
 
 module.exports = Router

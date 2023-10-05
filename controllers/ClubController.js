@@ -1,4 +1,4 @@
-const { Club, MemberList, User } = require('../models')
+const { Club, MemberList, User, ReadingList, Book } = require('../models')
 
 const createClub = async (req, res) => {
     try {
@@ -40,8 +40,30 @@ const addMemberToClub = async (req, res) => {
     }
 }
 
+const addBookToList = async (req, res) => {
+    try {
+        const club = await Club.findByPk(req.params.club_id)
+        await club.addBooks([req.body.bookId])
+        await club.save()
+        const response = await Club.findByPk(req.params.club_id, {
+            include: [
+                {
+                    model: Book,
+                    through: ReadingList,
+                    as: "books",
+                    attributes: ['id']
+                }
+            ]
+        })
+        res.send(response)
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     createClub,
     getAllClubs,
-    addMemberToClub
+    addMemberToClub,
+    addBookToList
 }
