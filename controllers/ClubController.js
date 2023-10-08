@@ -80,10 +80,34 @@ const addBookToList = async (req, res) => {
     }
 }
 
+const removeBookFromList = async (req, res) => {
+    try {
+        const readingList = await ReadingList.findAll({
+            where: { 
+                bookId: req.params.book_id,
+                clubId: req.params.club_id
+            }
+        })
+        // await readingLists.map((list) => list.destroy())
+        // res.send({
+        //     msg: 'Book Removed From List',
+        //     payload: req.params.book_id,
+        //     status: 'Ok'
+        // })
+        res.send({
+            msg: 'List',
+            payload: readingList
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     createClub,
     getAllClubs,
     getClubById,
     addMemberToClub,
-    addBookToList
+    addBookToList,
+    removeBookFromList
 }
