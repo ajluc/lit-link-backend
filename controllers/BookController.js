@@ -1,4 +1,4 @@
-const { Book } = require('../models')
+const { Book, ReadingList } = require('../models')
 
 // temporary for testing - remove when incorporating auth
 const createBook = async (req, res) => {
@@ -30,8 +30,26 @@ const getBookById = async (req, res) => {
     }
 }
 
+const deleteBook = async (req, res) => {
+    try {
+        const readingLists = await ReadingList.findAll({
+            where: { bookId: req.params.book_id}
+        })
+        await readingLists.map((list) => list.destroy())
+        await Book.destroy({ where: { id: req.params.book_id}})
+        res.send({
+            msg: 'Book Deleted',
+            payload: req.params.book_id,
+            status: 'Ok'
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     createBook, 
     getAllBooks,
-    getBookById
+    getBookById,
+    deleteBook
 }
