@@ -34,6 +34,12 @@ const getClubById = async (req, res) => {
     const club = await Club.findByPk(club_id, {
       include: [
         {
+          model: User,
+          as: 'members',
+          through: MemberList,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
           model: Book,
           as: 'books',
           through: ReadingList,

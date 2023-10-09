@@ -39,8 +39,44 @@ const getUserById = async (req, res) => {
     }
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const memberLists = await MemberList.findAll({
+            where: { userId: req.params.user_id }
+          })
+          await memberLists.map((list) => list.destroy())
+          await User.destroy({ where: { id: req.params.user_id } })
+          res.send({
+            msg: 'User Deleted',
+            payload: req.params.user_id,
+            status: 'Ok'
+          })
+    } catch (error) {
+        throw error
+    }
+}
+
+// const deleteUser = async (req, res) => {
+//         try {
+//             console.log('ping')
+//       const memberLists = await MemberList.findAll({
+//         where: { userId: req.params.user_id }
+//       })
+//       await memberLists.map((list) => list.destroy())
+//       await User.destroy({ where: { id: req.params.user_id } })
+//       res.send({
+//         msg: 'User Deleted',
+//         payload: req.params.user_id,
+//         status: 'Ok'
+//       })
+//     } catch (error) {
+//       throw error
+//     }
+//   }
+
 module.exports = {
     createUser, 
     getAllUsers,
-    getUserById
+    getUserById,
+    deleteUser
 }
