@@ -1,15 +1,15 @@
 const { User, Club, MemberList } = require('../models')
 
 // temporary for testing - remove when incorporating auth
-const createUser = async (req, res) => {
-    try {
-        const user = await new User(req.body)
-        await user.save()
-        res.send(user)
-    } catch (error) {
-        throw error
-    }
-}
+// const createUser = async (req, res) => {
+//     try {
+//         const user = await new User(req.body)
+//         await user.save()
+//         res.send(user)
+//     } catch (error) {
+//         throw error
+//     }
+// }
 
 const getAllUsers = async (req, res) => {
     try {
@@ -56,26 +56,8 @@ const deleteUser = async (req, res) => {
     }
 }
 
-// const deleteUser = async (req, res) => {
-//         try {
-//             console.log('ping')
-//       const memberLists = await MemberList.findAll({
-//         where: { userId: req.params.user_id }
-//       })
-//       await memberLists.map((list) => list.destroy())
-//       await User.destroy({ where: { id: req.params.user_id } })
-//       res.send({
-//         msg: 'User Deleted',
-//         payload: req.params.user_id,
-//         status: 'Ok'
-//       })
-//     } catch (error) {
-//       throw error
-//     }
-//   }
-
 module.exports = {
-    createUser, 
+    // createUser, 
     getAllUsers,
     getUserById,
     deleteUser

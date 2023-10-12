@@ -1,13 +1,32 @@
 const Router = require('express').Router()
 const controller = require('../controllers')
+const middleware = require('../middleware')
 
-Router.post('/', controller.ClubController.createClub)
+
+Router.post(
+  '/',
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.ClubController.createClub
+  )
 Router.get('/', controller.ClubController.getAllClubs)
 Router.get('/:club_id', controller.ClubController.getClubById)
-Router.post('/:club_id/addUsers', controller.ClubController.addMemberToClub)
-Router.post('/:club_id/addBooks', controller.ClubController.addBookToList)
+Router.post(
+  '/:club_id/addUsers', 
+  // middleware.stripToken,
+  // middleware.verifyToken,
+  controller.ClubController.addMemberToClub
+  )
+Router.post(
+  '/:club_id/addBooks', 
+  // middleware.stripToken,
+  // middleware.verifyToken,
+  controller.ClubController.addBookToList
+  )
 Router.delete(
   '/:club_id/:book_id',
+  // middleware.stripToken,
+  // middleware.verifyToken,
   controller.ClubController.removeBookFromList
 )
 
