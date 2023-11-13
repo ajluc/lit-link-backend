@@ -17,13 +17,14 @@ Router.post(
   // middleware.verifyToken,
   controller.ClubController.addMemberToClub
   )
-Router.post(
-  '/:club_id/addBooks', 
-  // middleware.stripToken,
-  // middleware.verifyToken,
-  controller.ClubController.addBookToList
-  )
-Router.delete(
+  Router.get('/user/:user_id', controller.ClubController.getClubsByUser)
+  Router.post(
+    '/:club_id/addBooks', 
+    // middleware.stripToken,
+    // middleware.verifyToken,
+    controller.ClubController.addBookToList
+    )
+    Router.delete(
   '/:club_id/:book_id',
   // middleware.stripToken,
   // middleware.verifyToken,

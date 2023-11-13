@@ -28,6 +28,32 @@ const getAllClubs = async (req, res) => {
   }
 }
 
+const getClubsByUser = async (req,res) => {
+  try {
+    const { user_id } = req.params
+    const clubs = await Club.findAll({
+      include: [
+        {
+          model: User,
+          as: 'members',
+          through: MemberList,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: Book,
+          as: 'books',
+          through: ReadingList,
+          attributes: ['id', 'data']
+        }
+      ],
+      where: { '$members.id$': user_id}
+    })
+    res.send(clubs)
+  } catch (error) {
+    throw error
+  }
+}
+
 const getClubById = async (req, res) => {
   try {
     const { club_id } = req.params
@@ -117,6 +143,7 @@ const removeBookFromList = async (req, res) => {
 module.exports = {
   createClub,
   getAllClubs,
+  getClubsByUser,
   getClubById,
   addMemberToClub,
   addBookToList,
